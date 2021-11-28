@@ -231,7 +231,7 @@ export default class MiscellaneousDevice extends Tp.BaseDevice {
         return { duration : duration };
     }
 
-    async do_configure({ device } : { device : unknown }) : Promise<never> {
+    async do_configure({ device } : { device : unknown }) {
         const tpClient = this.engine.thingpedia;
         try {
             await tpClient.getDeviceCode(String(device));
@@ -242,7 +242,7 @@ export default class MiscellaneousDevice extends Tp.BaseDevice {
         }
 
         // TODO restore the ability to configure skills from inside the dialogue
-        throw new CustomError('unsupported_platform', `not supported`);
+        (this.engine as AssistantEngine).createSimpleDevice(String(device));
 
         /*
         var conversation = env.app.getConversation();
